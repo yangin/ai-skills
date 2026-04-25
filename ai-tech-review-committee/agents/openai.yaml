@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI 技术评审委员会"
+  short_description: "用多角色专家委员会评审并补强软件系统方案与交付计划"
+  default_prompt: "使用 $ai-tech-review-committee，帮我评审这个软件系统方案，并从产品、架构、工程、安全、可靠性、测试、AI/data、UX、交付成本角度补强。"
