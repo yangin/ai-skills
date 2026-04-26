@@ -4,7 +4,7 @@
 
 `SKILL.md` 故意保持精简，因为它会在每次触发 skill 时进入上下文；详细安装说明放在本 README，避免增加运行时 token。
 
-## Usage
+## USAGE
 
 Codex 个人 skill：
 
