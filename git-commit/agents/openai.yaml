@@ -1,0 +1,4 @@
+interface:
+  display_name: "Git Commit"
+  short_description: "自动生成并创建规范 Git commit"
+  default_prompt: "使用 $git-commit，分析当前 Git 变更，按需拆分并创建英文 Conventional Commits 提交。"
