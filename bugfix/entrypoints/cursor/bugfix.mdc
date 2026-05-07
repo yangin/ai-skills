@@ -1,0 +1,22 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+
+# Bugfix
+
+手动触发型 Cursor 规则（`@bugfix`）。被引用后优先读取 `bugfix/SKILL.md`；读不到时按以下最小流程执行。
+
+1. 校验在 git 仓库内且 `git status --porcelain` 为空；脏则提示用户先处理，停止。
+2. 记录 `BASE_BRANCH = git rev-parse --abbrev-ref HEAD`（合并目标即启动分支，不假设 main）。
+3. 由 bug 描述生成 slug，分支名 `bugfix/<slug>-<yyyymmddHHMM>`。
+4. worktree 路径放仓库外 `<repo-parent>/<repo-name>-worktrees/<branch>`，`git fetch`（失败不阻断）后 `git worktree add -b <branch> <path> <BASE_BRANCH>`。
+5. 进入该路径完成修复，范围严格围绕 bug 描述。
+6. 合并前自检：探测 `package.json`、`pyproject.toml`、`go.mod`、`Cargo.toml`、`Makefile` 中的 lint/test，**命中即跑、缺失即跳**；失败则停在 worktree，保留现场。
+7. `git add -A` + `git commit -m "fix: <摘要>"`，Conventional Commits、英文、≤30 词。
+8. 退回主仓库；若 `BASE_BRANCH` 有 upstream，先 `git pull --ff-only`；非 ff 停止。
+9. `git checkout <BASE_BRANCH>` 后 `git merge --no-ff <branch> -m "merge: bugfix/<slug>"`。
+10. 冲突：`>3` 文件、或命中 lock / migration / CI / 构建配置 → 保留冲突状态交还用户，**不** `merge --abort`；其余简单冲突结合双方 commit message + 原 bug 描述自行解，`git add` 后完成 merge commit。
+11. 合并成功 → `git worktree remove <path>` 且 `git branch -d <branch>`；失败 / 冲突 / 自检不通过 → 保留现场，向用户报告路径与下一步。
+12. 全程不 push、不 force、不 reset --hard、不 amend、不 rebase、不 `--no-verify`。

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bugfix"
+  short_description: "每个 bug 走独立 worktree 隔离修复，自动合回并清理"
+  default_prompt: "使用 $bugfix，把当前要修的 bug 放到独立 worktree 中完成修复、自检、提交、合回启动分支并清理。"
