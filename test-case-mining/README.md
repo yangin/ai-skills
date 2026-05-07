@@ -16,6 +16,8 @@
 - **Spec-only（默认）**：只产测试规格 + Scout 报告 + 风险清单，不写测试代码。
 - **Codegen**：用户明确要骨架代码时新增测试文件，不覆盖既有测试。
 
+报告默认写入 `./test-mining/<对象>.md`，结构是 mind-map-friendly 的 markdown（标题层级 + 嵌套列表 + `markmap` frontmatter），可直接被 [markmap](https://markmap.js.org/)、Obsidian Mindmap、VS Code Markmap / Markdown Preview Enhanced 渲染成思维导图；本地也可一行命令出图：`npx markmap-cli ./test-mining/<file>.md`。
+
 ## 审查重点
 
 - 先盘点现有测试，`已测`必须有测试文件与断言证据，避免凭印象误判覆盖。
